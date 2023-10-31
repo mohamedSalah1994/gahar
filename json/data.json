@@ -1,0 +1,91 @@
+{
+  "pages": [
+    {
+      "name": "screen1",
+      "url": "google.com",
+      "page_id": null,
+      "id": 1
+    },
+    {
+      "name": "screen 2 update",
+      "url": "google2.com",
+      "page_id": 1,
+      "id": 2
+    },
+    {
+      "name": "screen 3",
+      "url": "screen3.ocm",
+      "page_id": 1,
+      "id": 3
+    },
+    {
+      "name": "dddd",
+      "url": "dd",
+      "page_id": null,
+      "id": 4
+    },
+    {
+      "name": "d",
+      "url": "dd",
+      "page_id": null,
+      "id": 5
+    },
+    {
+      "pageName": "testcom",
+      "shortLink": "test.",
+      "pageUrl": "test.com",
+      "pagePagesId": null,
+      "id": 6
+    }
+  ],
+  "content": [
+    {
+      "sectionTypeId": 3,
+      "pageSectionName": "",
+      "pageSectionUrl": "",
+      "pagesId": 1,
+      "id": 1
+    },
+    {
+      "sectionTypeId": 2,
+      "pageSectionName": "details",
+      "pageSectionUrl": "head.com",
+      "pagesId": 1,
+      "id": 2
+    },
+    {
+      "sectionTypeId": 1,
+      "pageSectionName": "test",
+      "pageSectionUrl": "https://laravel.com/",
+      "pagesId": 1,
+      "id": 3
+    },
+    {
+      "sectionTypeId": 1,
+      "pageSectionName": "mohamed",
+      "pageSectionUrl": "head.com",
+      "pagesId": 1,
+      "id": 4
+    }
+  ],
+  "file": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    }
+  ]
+}
