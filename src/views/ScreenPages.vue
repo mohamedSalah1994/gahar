@@ -4,24 +4,36 @@ import axios from "axios";
 import { onMounted, ref, computed } from "vue";
 
 const form = ref({
-  pageName: "",
-
+  pageName: null,
   shortLink: "",
   pageUrl: "",
   pagPagesId: null,
 });
 
 const items = ref([]);
+const imageFile = ref(null);
+
+const handleImageChange = (event) => {
+  const file = event.target.files[0];
+  imageFile.value = file;
+};
 
 const handleSubmit = async () => {
+  const formData = new FormData();
+
+  formData.append("pageName", form.value.pageName);
+  formData.append("pagPagesId", form.value.pagPagesId);
+  formData.append("pageUrl", form.value.pageUrl);
+  formData.append("shortLink", form.value.shortLink);
+
+  if (imageFile.value) {
+    formData.append("imageUrl", imageFile.value);
+  }
+
   try {
     const result = await axios.post(
       "https://10.18.121.124:448/api/pages/postpage",
-      {
-        PageName: form.value.pageName,
-        PageUrl: form.value.pageUrl,
-        ShortLink: form.value.shortLink,
-      },
+      formData,
       {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -29,21 +41,15 @@ const handleSubmit = async () => {
         },
       }
     );
-
     console.log(result);
-
     if (result.status === 201 || result.status === 200) {
-      const newItem = { ...form.value, id: result.data.id }; // Assuming the API response includes the new item's ID
+      const newItem = { ...form.value, id: result.data.id };
       items.value.push(newItem);
-      // Clear the form
-      form.value.pageName = "";
-      form.value.shortLink = "";
-      (form.value.pageUrl = ""), (form.value.pagPagesId = "");
     } else {
-      console.log("something went wrong");
+      console.log("Something went wrong");
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 
@@ -79,12 +85,21 @@ const pageNameMap = computed(() => {
 
     <select v-model="form.pagPagesId" id="page_id">
       <option value="" disabled>Select a page</option>
-      <option v-for="item in items" :key="item.id" :value="item.id">
+      <option v-for="item in items" :key="item.id" :value="item.pagesId">
         {{ item.pageName }}
       </option>
     </select>
     <input type="text" v-model="form.pageUrl" placeholder="url" />
     <input type="text" v-model="form.shortLink" placeholder="short link" />
+
+    <input
+      type="file"
+      id="image"
+      ref="imageInput"
+      accept="image/*"
+      @change="handleImageChange"
+    />
+
     <button type="submit">Add</button>
   </form>
   <hr />
@@ -95,20 +110,23 @@ const pageNameMap = computed(() => {
         <th>Page name</th>
         <th class="page_id">p.page_id</th>
         <th class="url">url</th>
-        <th class="url">short link</th>
+        <th class="link">short link</th>
+        <th class="image">image url</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="item in items" :key="item.id">
-        <td>{{ item.id }}</td>
+        <td>{{ item.pages }}</td>
         <td>{{ item.pageName }}</td>
         <td class="page_id">{{ pageNameMap[item.pagPagesId] }}</td>
         <td class="url">{{ item.pageUrl }}</td>
         <td class="url">{{ item.shortLink }}</td>
+        <td class="url">{{ item.imageUrl }}</td>
       </tr>
     </tbody>
   </table>
 </template>
+
 <style>
 form {
   width: 500px;
